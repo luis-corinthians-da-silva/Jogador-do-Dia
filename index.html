@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jogador do Dia — Protótipo</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --text:#e8eefc;
+      --muted:#a7b3d1;
+      --accent:#7c5cff;
+      --good:#2ee59d;
+      --warn:#ffcc66;
+      --danger:#ff5c7a;
+
+      --pitch:#1b7a3b;
+      --pitch2:#136432;
+      --line:rgba(255,255,255,.35);
+
+      --ring: 0 0 0 3px rgba(124,92,255,.65);
+      --ring2: 0 0 0 3px rgba(46,229,157,.55);
+      --ringWarn: 0 0 0 3px rgba(255,204,102,.55);
+      --ringDanger: 0 0 0 3px rgba(255,92,122,.55);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,.20), transparent 60%),
+                  radial-gradient(900px 700px at 80% 0%, rgba(46,229,157,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      overflow:hidden; /* desktop: página não rola */
+    }
+    @media (max-width: 980px){
+      body{ overflow:auto; }
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 20px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: linear-gradient(to bottom, rgba(255,255,255,.04), transparent);
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{display:flex; gap:12px; align-items:center; min-width:260px;}
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(46,229,157,.80));
+      display:grid; place-items:center;
+      color:#0b1220; font-weight:900;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      flex:0 0 auto;
+    }
+    .title{font-weight:800; letter-spacing:.2px}
+    .subtitle{font-size:12px; color:var(--muted); margin-top:2px}
+
+    .top-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;}
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.1px;
+      display:flex; gap:8px; align-items:center;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn:active{transform: translateY(1px)}
+
+    .pill{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.04);
+      max-width: 420px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .select{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:700;
+      outline:none;
+    }
+    .select option{ background:#0c1526; color:var(--text); }
+    .label{ font-size:12px; color:var(--muted); margin-right:6px; }
+
+    main{
+      padding:16px 20px 18px;
+      height: calc(100vh - 72px);
+      overflow:hidden; /* só a lista rola */
+    }
+    @media (max-width: 980px){
+      main{ height:auto; overflow:visible; }
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:16px;
+      align-items:stretch;
+      height:100%;
+      min-height:0;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr; height:auto;}
+    }
+
+    .pitch-wrap{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      padding:12px;
+      height:100%;
+      min-height:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), transparent);
+    }
+    .pitch{
+      position:relative;
+      width:100%;
+      height:100%;
+      min-height:0;
+      border-radius:14px;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.06) 50%, rgba(255,255,255,.0) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 2px, rgba(255,255,255,0) 2px 160px),
+        linear-gradient(180deg, var(--pitch), var(--pitch2));
+    }
+    @media (max-width: 980px){
+      .pitch{ height: 560px; }
+      .pitch-wrap{ height:auto; }
+    }
+
+    .pitch::before{
+      content:"";
+      position:absolute; inset:14px;
+      border:2px solid var(--line);
+      border-radius:12px;
+      pointer-events:none;
+    }
+    .midline{
+      position:absolute;
+      top:14px; bottom:14px;
+      left:50%;
+      width:2px;
+      background: var(--line);
+      transform: translateX(-1px);
+      pointer-events:none;
+    }
+    .circle{
+      position:absolute;
+      left:50%; top:50%;
+      width:160px; height:160px;
+      border:2px solid var(--line);
+      border-radius:50%;
+      transform: translate(-50%,-50%);
+      pointer-events:none;
+    }
+    .penalty{
+      position:absolute;
+      width:22%;
+      height:36%;
+      border:2px solid var(--line);
+      top:50%;
+      transform: translateY(-50%);
+      border-radius:8px;
+      pointer-events:none;
+    }
+    .penalty.left{left:14px}
+    .penalty.right{right:14px}
+    .goalbox{
+      position:absolute;
+      width:12%;
+      height:20%;
+      border:2px solid var(--line);
+      top:50%;
+      transform: translateY(-50%);
+      border-radius:6px;
+      pointer-events:none;
+    }
+    .goalbox.left{left:14px}
+    .goalbox.right{right:14px}
+    .spot{
+      position:absolute;
+      width:8px; height:8px; border-radius:999px;
+      background: var(--line);
+      top:50%;
+      transform: translateY(-50%);
+      pointer-events:none;
+    }
+    .spot.left{left: 22%}
+    .spot.right{right: 22%}
+    .corner{
+      position:absolute;
+      width:22px; height:22px;
+      border:2px solid var(--line);
+      border-right:0; border-bottom:0;
+      border-top-left-radius:14px;
+      pointer-events:none;
+      opacity:.9;
+    }
+    .corner.tr{right:14px; top:14px; transform: rotate(90deg);}
+    .corner.bl{left:14px; bottom:14px; transform: rotate(-90deg);}
+    .corner.br{right:14px; bottom:14px; transform: rotate(180deg);}
+    .corner.tl{left:14px; top:14px;}
+
+    .slot{
+      position:absolute;
+      width:94px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+      cursor:grab;
+      user-select:none;
+      touch-action:none;
+    }
+    .slot:active{cursor:grabbing}
+    .slot *{
+      pointer-events:none; /* arrasta pela bolinha, nome, qualquer parte */
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    .avatar{
+      width:64px; height:64px;
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18);
+      overflow:hidden;
+      display:grid; place-items:center;
+      box-shadow: 0 18px 28px rgba(0,0,0,.28);
+    }
+    .avatar img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .name{
+      font-size:12px;
+      font-weight:750;
+      text-align:center;
+      line-height:1.1;
+      padding:0 6px;
+      color: rgba(255,255,255,.92);
+      text-shadow: 0 2px 12px rgba(0,0,0,.45);
+      max-width:96px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .slot.selected .avatar{
+      box-shadow: var(--ring), 0 18px 28px rgba(0,0,0,.28);
+      border-color: rgba(124,92,255,.75);
+    }
+    .slot.invalid .avatar{
+      box-shadow: var(--ringDanger), 0 18px 28px rgba(0,0,0,.28);
+      border-color: rgba(255,92,122,.80);
+    }
+    .slot.invalid .name{ color: rgba(255,204,102,.95); }
+
+    .slot .badge{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.86);
+      display:none;
+    }
+    .slot.selected .badge{display:block}
+    .slot.invalid .badge{
+      display:block;
+      background: rgba(255,92,122,.18);
+      border-color: rgba(255,92,122,.45);
+      color: rgba(255,255,255,.92);
+    }
+
+    .panel{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:18px;
+      overflow:hidden;
+      height:100%;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+    }
+    .panel-head{
+      padding:14px 14px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    .panel-head h2{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.1px;
+    }
+    .hint{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.25;
+    }
+
+    .search{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .search input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      outline:none;
+      font-weight:650;
+    }
+    .search input::placeholder{ color: rgba(167,179,209,.85); }
+
+    .active-state{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-top:10px;
+      padding:10px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      background: rgba(255,255,255,.04);
+    }
+    .active-dot{
+      width:10px;height:10px;border-radius:99px;
+      background: rgba(255,255,255,.18);
+    }
+    .active-dot.on{ background: var(--good); box-shadow: 0 0 0 6px rgba(46,229,157,.12);}
+
+    .active-meta{display:flex;flex-direction:column;gap:2px}
+    .active-title{font-weight:800;font-size:13px}
+    .active-sub{font-size:12px;color:var(--muted)}
+
+    .panel-body{
+      padding:8px 10px 12px;
+      overflow:auto;
+      min-height:0;
+    }
+
+    .group{
+      margin-top:10px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      overflow:hidden;
+      background: rgba(255,255,255,.02);
+    }
+    .group h3{
+      margin:0;
+      padding:10px 10px;
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      color: var(--muted);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .count{font-size:11px; opacity:.9}
+
+    .row{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 10px;
+      border:0;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: transparent;
+      cursor:pointer;
+      color:inherit;
+      text-align:left;
+    }
+    .row:last-child{border-bottom:0}
+    .row:hover{background: rgba(255,255,255,.05)}
+
+    .row-main{display:flex; align-items:center; gap:10px; min-width:0}
+    .flag{font-size:16px; width:22px; text-align:center; opacity:.95}
+    .row-name{
+      font-weight:760;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .row-meta{
+      display:flex; align-items:center; gap:8px;
+      flex-shrink:0;
+    }
+    .ovr{
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.90);
+      min-width:44px;
+      text-align:center;
+    }
+    .warnTag{font-size:12px; opacity:.95;}
+
+    .row.in-lineup .row-name{color: rgba(255,255,255,.98)}
+    .row.in-lineup .ovr{box-shadow: var(--ring2); border-color: rgba(46,229,157,.45)}
+    .row.out-lineup{opacity:.55}
+
+    .row.candidate{
+      outline: none;
+      box-shadow: var(--ring);
+      border-radius:12px;
+      background: rgba(124,92,255,.10);
+    }
+
+    .row.mismatch .ovr{
+      box-shadow: var(--ringWarn);
+      border-color: rgba(255,204,102,.60);
+    }
+
+    .toast{
+      position:fixed;
+      left:20px;
+      bottom:18px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(10,16,29,.78);
+      color: rgba(255,255,255,.90);
+      backdrop-filter: blur(10px);
+      max-width: 560px;
+      display:none;
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      z-index:50;
+    }
+    .toast.show{display:block}
+    .toast b{color:var(--text)}
+    .kbd{
+      font-size:11px;
+      padding:3px 7px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.90);
+      display:inline-block;
+      margin-left:6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">JD</div>
+      <div>
+        <div class="title">Jogador do Dia</div>
+        <div class="subtitle">Teste com sua lista — arraste no campo e substitua pela lista</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <span class="label">Formação</span>
+      <select class="select" id="formationSelect" aria-label="Selecionar formação">
+        <option value="433">4-3-3</option>
+        <option value="4231">4-2-3-1</option>
+        <option value="442">4-4-2</option>
+        <option value="352">3-5-2</option>
+        <option value="343">3-4-3</option>
+        <option value="532">5-3-2</option>
+      </select>
+
+      <button class="btn" id="importBtn" title="Carregar um JSON de jogadores (ex.: players.with_photos.json)">
+        ⭳ Importar JSON
+      </button>
+      <input id="fileInput" type="file" accept="application/json" style="display:none" />
+      <button class="btn" id="resetBtn" title="Voltar para a formação inicial">
+        ↺ Reset
+      </button>
+      <span class="pill" id="formationPill">Carregando…</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <section class="pitch-wrap" aria-label="Campo interativo">
+        <div class="pitch" id="pitch">
+          <div class="midline"></div>
+          <div class="circle"></div>
+          <div class="penalty left"></div>
+          <div class="penalty right"></div>
+          <div class="goalbox left"></div>
+          <div class="goalbox right"></div>
+          <div class="spot left"></div>
+          <div class="spot right"></div>
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+        </div>
+      </section>
+
+      <aside class="panel" aria-label="Lista lateral de jogadores para substituição">
+        <div class="panel-head">
+          <h2>Banco</h2>
+          <div class="hint">
+            Fluxo livre:<br/>
+            <b>A)</b> clique no campo → clique no banco<br/>
+            <b>B)</b> clique no banco → clique no campo<br/>
+            Limpar seleção: <span class="kbd">Esc</span>.
+          </div>
+
+          <div class="search">
+            <input id="searchInput" type="search" placeholder="Buscar jogador (nome)..." />
+          </div>
+
+          <div class="active-state">
+            <div class="active-dot" id="activeDot"></div>
+            <div class="active-meta">
+              <div class="active-title" id="activeTitle">Nenhuma substituição armada</div>
+              <div class="active-sub" id="activeSub">Clique no campo ou no banco para começar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-body" id="panelBody"></div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Seed embed: pra testar abrindo o HTML direto (sem servidor) -->
+  <script type="application/json" id="playersSeed">{"schema_version":"1.0","position_codes":["GK","ZAG","LD","LE","VOL","MC","MEI","PD","PE","SA","CA","ALA"],"primary_groups":["Goleiro","Zagueiro","Lateral","Meia","Atacante"],"players":[{"id":"p_cristian_tello","full_name":"Cristian Tello Herrera","display_name":"Tello","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Tello","nationality":"Espanha","nationality_iso2":"ES","flag_emoji":"🇪🇸","primary_group":"Atacante","top_positions":["PE","PD"],"peak_overall":80,"sources":["https://www.fifaindex.com/player/200315/cristian-tello/fifa19/"]},{"id":"p_mohamed_aboutrika","full_name":"Mohammed Aboutrika","display_name":"Aboutrika","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Aboutrika","nationality":"Egito","nationality_iso2":"EG","flag_emoji":"🇪🇬","primary_group":"Meia","top_positions":["MEI","MC","SA"],"peak_overall":77,"sources":["https://www.fifaindex.com/player/169764/mohammed-aboutrika/fifa12/"]},{"id":"p_breno","full_name":"Breno Vinícius Borges","display_name":"Breno","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Breno","nationality":"Brasil","nationality_iso2":"BR","flag_emoji":"🇧🇷","primary_group":"Zagueiro","top_positions":["ZAG"],"peak_overall":75,"sources":["https://www.fifaindex.com/player/180955/breno/fifa16/"]},{"id":"p_lassana_diarra","full_name":"Lassana Diarra","display_name":"L. Diarra","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=LassanaDiarra","nationality":"França","nationality_iso2":"FR","flag_emoji":"🇫🇷","primary_group":"Meia","top_positions":["VOL","MC"],"peak_overall":82,"sources":["https://www.fifaindex.com/player/163711/lassana-diarra/fifa10/"]},{"id":"p_tcheco","full_name":"Tcheco","display_name":"Tcheco","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Tcheco","nationality":"Brasil","nationality_iso2":"BR","flag_emoji":"🇧🇷","primary_group":"Meia","top_positions":["MEI","MC"],"peak_overall":76,"sources":["https://sofifa.com/player/158160/tcheco/100002?hl=en-US"],"notes":"Entrada via SoFIFA (FIFA 10)."},{"id":"p_yoann_gourcuff","full_name":"Yoann Miguel Gourcuff","display_name":"Gourcuff","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Gourcuff","nationality":"França","nationality_iso2":"FR","flag_emoji":"🇫🇷","primary_group":"Meia","top_positions":["MEI","MC"],"peak_overall":85,"sources":["https://www.fifaindex.com/player/153296/yoann-gourcuff/fifa10/"]},{"id":"p_trevor_sinclair","full_name":"Trevor John Sinclair","display_name":"Sinclair","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=TrevorSinclair","nationality":"Inglaterra","nationality_iso2":"GB","flag_emoji":"🏴","primary_group":"Atacante","top_positions":["PE","PD"],"peak_overall":76,"sources":["https://www.fifaindex.com/player/50421/trevor-sinclair/fifa05/"]},{"id":"p_eduardo_da_silva","full_name":"Eduardo Alves da Silva","display_name":"Eduardo","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=EduardoDaSilva","nationality":"Croácia","nationality_iso2":"HR","flag_emoji":"🇭🇷","primary_group":"Atacante","top_positions":["CA","SA"],"peak_overall":83,"sources":["https://sofifa.com/player/177491/eduardo/090002?hl=en-US","https://www.fifaindex.com/player/177491/eduardo-da-silva/changelog/"]},{"id":"p_chygrynskyi","full_name":"Dmytro Chygrynskyi","display_name":"Chygrynskyi","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Chygrynskyi","nationality":"Ucrânia","nationality_iso2":"UA","flag_emoji":"🇺🇦","primary_group":"Zagueiro","top_positions":["ZAG"],"peak_overall":78,"sources":["https://www.fifaindex.com/player/176483/dmytro-chygrynskyy/fifa10/"]},{"id":"p_adebayo_akinfenwa","full_name":"Adebayo Akinfenwa","display_name":"Akinfenwa","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Akinfenwa","nationality":"Inglaterra","nationality_iso2":"GB","flag_emoji":"🏴","primary_group":"Atacante","top_positions":["CA"],"peak_overall":65,"sources":["https://www.fifaindex.com/player/156321/adebayo-akinfenwa/fifa21/"]},{"id":"p_denis_cheryshev","full_name":"Denis Dmitriyevich Cheryshev","display_name":"Cheryshev","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Cheryshev","nationality":"Rússia","nationality_iso2":"RU","flag_emoji":"🇷🇺","primary_group":"Atacante","top_positions":["PE","PD"],"peak_overall":79,"sources":["https://www.fifaindex.com/player/206225/denis-cheryshev/fifa19/"]},{"id":"p_renan_gk","full_name":"Renan dos Santos","display_name":"Renan","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=RenanGK","nationality":"Brasil","nationality_iso2":"BR","flag_emoji":"🇧🇷","primary_group":"Goleiro","top_positions":["GK"],"peak_overall":70,"sources":["https://sofifa.com/player/203784/renan/140002?hl=en-US"],"notes":"Entrada via SoFIFA (FIFA 14)."},{"id":"p_hakan_sukur","full_name":"Hakan Şükür","display_name":"Şükür","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=HakanSukur","nationality":"Turquia","nationality_iso2":"TR","flag_emoji":"🇹🇷","primary_group":"Atacante","top_positions":["CA"],"peak_overall":81,"sources":["https://www.fifaindex.com/player/24691/hakan-sukur/fifa05/"]},{"id":"p_seydou_keita","full_name":"Seydou Kéita","display_name":"S. Keita","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=SeydouKeita","nationality":"Mali","nationality_iso2":"ML","flag_emoji":"🇲🇱","primary_group":"Meia","top_positions":["VOL","MC"],"peak_overall":82,"sources":["https://www.fifaindex.com/player/12259/seydou-keita/fifa10/"]},{"id":"p_ryan_babel","full_name":"Ryan Guno Babel","display_name":"Babel","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=RyanBabel","nationality":"Holanda","nationality_iso2":"NL","flag_emoji":"🇳🇱","primary_group":"Atacante","top_positions":["PE","PD","CA"],"peak_overall":81,"sources":["https://www.fifaindex.com/player/157301/ryan-babel/fifa09/"]},{"id":"p_miguel_valencia","full_name":"Miguel Brito","display_name":"Miguel","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=MiguelValencia","nationality":"Portugal","nationality_iso2":"PT","flag_emoji":"🇵🇹","primary_group":"Lateral","top_positions":["LD"],"peak_overall":80,"sources":["https://www.fifaindex.com/player/4006/miguel/fifa07/"],"notes":"Miguel (lateral português), ex-Valencia."},{"id":"p_shinji_okazaki","full_name":"Shinji Okazaki","display_name":"Okazaki","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Okazaki","nationality":"Japão","nationality_iso2":"JP","flag_emoji":"🇯🇵","primary_group":"Atacante","top_positions":["CA","SA"],"peak_overall":76,"sources":["https://www.fifaindex.com/player/166961/shinji-okazaki/fifa14/"]},{"id":"p_andre_santos","full_name":"André Santos","display_name":"André Santos","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=AndreSantos","nationality":"Brasil","nationality_iso2":"BR","flag_emoji":"🇧🇷","primary_group":"Lateral","top_positions":["LE","ALA"],"peak_overall":80,"sources":["https://www.fifaindex.com/player/166774/andre-santos/fifa10/"]},{"id":"p_boa_morte","full_name":"Luís Boa Morte","display_name":"Boa Morte","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=BoaMorte","nationality":"Portugal","nationality_iso2":"PT","flag_emoji":"🇵🇹","primary_group":"Atacante","top_positions":["PE","PD"],"peak_overall":80,"sources":["https://www.fifaindex.com/team/1354/portugal/fifa06/"]},{"id":"p_victor_moses","full_name":"Victor Moses","display_name":"Moses","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=VictorMoses","nationality":"Nigéria","nationality_iso2":"NG","flag_emoji":"🇳🇬","primary_group":"Lateral","top_positions":["LD","PD"],"peak_overall":80,"sources":["https://www.fifaindex.com/player/172962/victor-moses/fifa18/"]},{"id":"p_emmanuel_adebayor","full_name":"Emmanuel Adebayor","display_name":"Adebayor","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Adebayor","nationality":"Togo","nationality_iso2":"TG","flag_emoji":"🇹🇬","primary_group":"Atacante","top_positions":["CA"],"peak_overall":84,"sources":["https://www.fifaindex.com/player/53050/emmanuel-adebayor/fifa10/"],"notes":"Observação: FUT mostra 86 no FIFA 10, mas aqui usamos rating de Career Mode (FIFAIndex)."},{"id":"p_laurent_koscielny","full_name":"Laurent Koscielny","display_name":"Koscielny","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Koscielny","nationality":"França","nationality_iso2":"FR","flag_emoji":"🇫🇷","primary_group":"Zagueiro","top_positions":["ZAG"],"peak_overall":85,"sources":["https://www.fifaindex.com/player/165229/laurent-koscielny/fifa17/"]},{"id":"p_aleksandar_kolarov","full_name":"Aleksandar Kolarov","display_name":"Kolarov","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Kolarov","nationality":"Sérvia","nationality_iso2":"RS","flag_emoji":"🇷🇸","primary_group":"Lateral","top_positions":["LE","ALA","ZAG"],"peak_overall":80,"sources":["https://www.fifaindex.com/player/185103/aleksandar-kolarov/fifa17/"]},{"id":"p_gudjohnsen","full_name":"Eiður Smári Guðjohnsen","display_name":"Gudjohnsen","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Gudjohnsen","nationality":"Islândia","nationality_iso2":"IS","flag_emoji":"🇮🇸","primary_group":"Atacante","top_positions":["CA","SA","MEI"],"peak_overall":87,"sources":["https://www.fifaindex.com/player/2310/ei%C3%B0ur-gudjohnsen/fifa05/"]},{"id":"p_fabricio_coloccini","full_name":"Fabricio Coloccini","display_name":"Coloccini","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Coloccini","nationality":"Argentina","nationality_iso2":"AR","flag_emoji":"🇦🇷","primary_group":"Zagueiro","top_positions":["ZAG"],"peak_overall":81,"sources":["https://www.fifaindex.com/player/142515/fabricio-coloccini/fifa13/"]},{"id":"p_manuel_lanzini","full_name":"Manuel Lanzini","display_name":"Lanzini","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Lanzini","nationality":"Argentina","nationality_iso2":"AR","flag_emoji":"🇦🇷","primary_group":"Meia","top_positions":["MEI","MC","PE"],"peak_overall":81,"sources":["https://www.fifaindex.com/player/188988/manuel-lanzini/fifa18/"]},{"id":"p_mauro_camoranesi","full_name":"Mauro Germán Camoranesi","display_name":"Camoranesi","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Camoranesi","nationality":"Itália","nationality_iso2":"IT","flag_emoji":"🇮🇹","primary_group":"Meia","top_positions":["PD","MEI","MC"],"peak_overall":84,"sources":["https://www.fifaindex.com/player/1382/mauro-camoranesi/fifa10/"]},{"id":"p_nicklas_bendtner","full_name":"Nicklas Bendtner","display_name":"Bendtner","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Bendtner","nationality":"Dinamarca","nationality_iso2":"DK","flag_emoji":"🇩🇰","primary_group":"Atacante","top_positions":["CA"],"peak_overall":79,"sources":["https://www.fifaindex.com/player/173809/nicklas-bendtner/fifa11/"]},{"id":"p_jakub_blaszczykowski","full_name":"Jakub Błaszczykowski","display_name":"Błaszczykowski","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Blaszczykowski","nationality":"Polônia","nationality_iso2":"PL","flag_emoji":"🇵🇱","primary_group":"Atacante","top_positions":["PD","PE"],"peak_overall":83,"sources":["https://www.fifaindex.com/player/173731/jakub-blaszczykowski/fifa14/"]},{"id":"p_kakha_kaladze","full_name":"Kakha Kaladze","display_name":"Kaladze","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=Kaladze","nationality":"Geórgia","nationality_iso2":"GE","flag_emoji":"🇬🇪","primary_group":"Zagueiro","top_positions":["ZAG","LE"],"peak_overall":85,"sources":["https://www.fifaindex.com/player/2983/kakha-kaladze/fifa07/"]},{"id":"p_tim_cahill","full_name":"Timothy Filiga Cahill","display_name":"Cahill","photo_url":"https://api.dicebear.com/9.x/thumbs/svg?seed=TimCahill","nationality":"Austrália","nationality_iso2":"AU","flag_emoji":"🇦🇺","primary_group":"Meia","top_positions":["SA","MEI","MC"],"peak_overall":81,"sources":["https://www.fifaindex.com/player/51412/tim-cahill/fifa10/"]}]}</script>
+
+  <script type="module">
+    // -----------------------
+    // Seed import
+    // -----------------------
+    const EMBEDDED_SEED = JSON.parse(document.getElementById("playersSeed").textContent);
+
+// Tenta carregar players.json quando estiver hospedado (GitHub Pages / Netlify etc).
+// Se falhar (ex.: abrindo pelo arquivo local), usa o seed embutido.
+let SEED = EMBEDDED_SEED;
+try{
+  const res = await fetch("players.json", {cache:"no-store"});
+  if(res.ok){
+    SEED = await res.json();
+  }
+}catch(_e){
+  // mantém o embutido
+}
+let players = (SEED.players || []).map(p => ({
+      id: p.id,
+      full_name: p.full_name,
+      display_name: p.display_name,
+      photo_url: p.photo_url,
+      nationality: p.nationality,
+      nationality_code: p.nationality_iso2 || p.nationality_code || null,
+      flag_emoji: p.flag_emoji || null,
+      primary_group: p.primary_group,
+      top_positions: p.top_positions || [],
+      peak_overall: Number(p.peak_overall || 0),
+      sources: p.sources || []
+    }));
+
+    const formations = {
+      "433": [
+        slot("s01","GK", 10, 50),
+        slot("s02","LB", 26, 18),
+        slot("s03","LCB", 28, 40),
+        slot("s04","RCB", 28, 60),
+        slot("s05","RB", 26, 82),
+        slot("s06","LCM", 52, 30),
+        slot("s07","CM", 54, 50),
+        slot("s08","RCM", 52, 70),
+        slot("s09","LW", 78, 22),
+        slot("s10","ST", 80, 50),
+        slot("s11","RW", 78, 78),
+      ],
+      "4231": [
+        slot("s01","GK", 10, 50),
+        slot("s02","LB", 26, 18),
+        slot("s03","LCB", 28, 40),
+        slot("s04","RCB", 28, 60),
+        slot("s05","RB", 26, 82),
+        slot("s06","LDM", 48, 42),
+        slot("s07","RDM", 48, 58),
+        slot("s08","LAM", 68, 30),
+        slot("s09","CAM", 70, 50),
+        slot("s10","RAM", 68, 70),
+        slot("s11","ST", 82, 50),
+      ],
+      "442": [
+        slot("s01","GK", 10, 50),
+        slot("s02","LB", 26, 18),
+        slot("s03","LCB", 28, 40),
+        slot("s04","RCB", 28, 60),
+        slot("s05","RB", 26, 82),
+        slot("s06","LM", 54, 22),
+        slot("s07","LCM", 54, 42),
+        slot("s08","RCM", 54, 58),
+        slot("s09","RM", 54, 78),
+        slot("s10","ST", 80, 42),
+        slot("s11","ST", 80, 58),
+      ],
+      "352": [
+        slot("s01","GK", 10, 50),
+        slot("s02","LCB", 26, 35),
+        slot("s03","CB", 24, 50),
+        slot("s04","RCB", 26, 65),
+        slot("s05","LWB", 54, 16),
+        slot("s06","LCM", 54, 36),
+        slot("s07","CM", 54, 50),
+        slot("s08","RCM", 54, 64),
+        slot("s09","RWB", 54, 84),
+        slot("s10","ST", 80, 44),
+        slot("s11","ST", 80, 56),
+      ],
+      "343": [
+        slot("s01","GK", 10, 50),
+        slot("s02","LCB", 26, 35),
+        slot("s03","CB", 24, 50),
+        slot("s04","RCB", 26, 65),
+        slot("s05","LWB", 52, 18),
+        slot("s06","LCM", 52, 38),
+        slot("s07","RCM", 52, 62),
+        slot("s08","RWB", 52, 82),
+        slot("s09","LW", 78, 22),
+        slot("s10","ST", 80, 50),
+        slot("s11","RW", 78, 78),
+      ],
+      "532": [
+        slot("s01","GK", 10, 50),
+        slot("s02","LWB", 24, 15),
+        slot("s03","LCB", 26, 35),
+        slot("s04","CB", 24, 50),
+        slot("s05","RCB", 26, 65),
+        slot("s06","RWB", 24, 85),
+        slot("s07","LCM", 54, 35),
+        slot("s08","CM", 54, 50),
+        slot("s09","RCM", 54, 65),
+        slot("s10","ST", 80, 44),
+        slot("s11","ST", 80, 56),
+      ],
+    };
+
+    const groupsOrder = ["Goleiro","Zagueiro","Lateral","Meia","Atacante"];
+    const formationLabels = {"433":"4-3-3","4231":"4-2-3-1","442":"4-4-2","352":"3-5-2","343":"3-4-3","532":"5-3-2"};
+
+    let currentFormationKey = "433";
+    let slots = structuredClone(formations[currentFormationKey]);
+    let lineup = buildLineupForFormation(currentFormationKey);
+
+    let selectedSlotId = null;
+    let selectedCandidateId = null;
+
+    const pitchEl = document.getElementById("pitch");
+    const panelBodyEl = document.getElementById("panelBody");
+    const formationPill = document.getElementById("formationPill");
+    const formationSelect = document.getElementById("formationSelect");
+    const activeDot = document.getElementById("activeDot");
+    const activeTitle = document.getElementById("activeTitle");
+    const activeSub = document.getElementById("activeSub");
+    const toastEl = document.getElementById("toast");
+    const searchInput = document.getElementById("searchInput");
+
+    function slot(id, label, xPct, yPct){ return { id, label, xPct, yPct }; }
+
+    function isoToFlagEmoji(iso2){
+      if(!iso2 || iso2.length!==2) return "🏳️";
+      const A = 0x1F1E6;
+      const codePoints = [...iso2.toUpperCase()].map(c => A + (c.charCodeAt(0) - 65));
+      return String.fromCodePoint(...codePoints);
+    }
+
+    function avatarDataURI(name){
+      const hue = (hash(name) % 360 + 360) % 360;
+      const initials = name.split(" ").filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join("");
+      const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="hsl(${hue},85%,58%)"/>
+            <stop offset="1" stop-color="hsl(${(hue+35)%360},85%,55%)"/>
+          </linearGradient>
+        </defs>
+        <rect width="128" height="128" rx="64" fill="url(#g)"/>
+        <circle cx="64" cy="64" r="62" fill="rgba(0,0,0,.12)"/>
+        <text x="64" y="74" text-anchor="middle"
+              font-family="ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial"
+              font-size="44" font-weight="800" fill="rgba(255,255,255,.92)">${escapeXML(initials)}</text>
+      </svg>`;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
+    }
+    function escapeXML(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")}
+    function hash(str){
+      let h=0;
+      for(let i=0;i<str.length;i++) h = Math.imul(31,h) + str.charCodeAt(i) | 0;
+      return h;
+    }
+
+    // garante foto sempre (se o seed ainda estiver com placeholder)
+    players = players.map(p => ({...p, photo_url: p.photo_url || avatarDataURI(p.display_name || p.full_name || "JD")}));
+
+    function getPlayer(pid){ return players.find(p=>p.id===pid); }
+    function isInLineup(pid){ return Object.values(lineup).includes(pid); }
+
+    function showToast(msg){
+      toastEl.innerHTML = msg;
+      toastEl.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toastEl.classList.remove("show"), 2200);
+    }
+
+    function expectedGroupForLabel(label){
+      const L = String(label || "").toUpperCase();
+      if(L === "GK") return "Goleiro";
+      if(L.includes("CB") || L.includes("LCB") || L.includes("RCB") || L.includes("ZAG")) return "Zagueiro";
+      if(L.includes("LB") || L.includes("RB") || L.includes("WB") || L.includes("LWB") || L.includes("RWB")) return "Lateral";
+      if(L.includes("DM") || L.includes("CM") || L.includes("AM") || L.includes("LM") || L.includes("RM") || L.includes("MEI") || L.includes("VOL")) return "Meia";
+      if(L.includes("ST") || L.includes("CF") || L.includes("LW") || L.includes("RW") || L.includes("SA") || L.includes("CA") || L.includes("ATA")) return "Atacante";
+      return null;
+    }
+
+    function isMismatch(slotId){
+      const s = slots.find(x=>x.id===slotId);
+      if(!s) return false;
+      const p = getPlayer(lineup[slotId]);
+      if(!p) return false;
+      const expected = expectedGroupForLabel(s.label);
+      if(!expected) return false;
+      return p.primary_group !== expected;
+    }
+
+    function pickBest(group, usedSet){
+      const list = players
+        .filter(p=>p.primary_group===group && !usedSet.has(p.id))
+        .sort((a,b)=>b.peak_overall - a.peak_overall);
+      return list[0]?.id ?? null;
+    }
+
+    function buildLineupForFormation(formationKey){
+      const used = new Set();
+      const mapping = {};
+      const fslots = formations[formationKey];
+      for(const s of fslots){
+        const expected = expectedGroupForLabel(s.label);
+        let pid = null;
+        if(expected) pid = pickBest(expected, used);
+        if(!pid) pid = players.find(p=>!used.has(p.id))?.id ?? null;
+        if(pid){
+          used.add(pid);
+          mapping[s.id] = pid;
+        }
+      }
+      return mapping;
+    }
+
+    function applyFormation(key, {resetLineup=true} = {}){
+      currentFormationKey = key;
+      slots = structuredClone(formations[key]);
+      lineup = resetLineup ? buildLineupForFormation(key) : lineup;
+      selectedSlotId = null;
+      selectedCandidateId = null;
+      formationSelect.value = key;
+      showToast(`Formação: <b>${formationLabels[key]}</b>`);
+      renderAll();
+    }
+
+    function renderPitch(){
+      [...pitchEl.querySelectorAll(".slot")].forEach(n=>n.remove());
+      const pitchRect = pitchEl.getBoundingClientRect();
+
+      slots.forEach(s=>{
+        const pid = lineup[s.id];
+        const p = getPlayer(pid);
+        const mismatch = isMismatch(s.id);
+
+        const el = document.createElement("div");
+        el.className = "slot" + (selectedSlotId===s.id ? " selected" : "") + (mismatch ? " invalid" : "");
+        el.dataset.slotId = s.id;
+
+        const x = (s.xPct/100) * pitchRect.width;
+        const y = (s.yPct/100) * pitchRect.height;
+
+        el.style.left = (x) + "px";
+        el.style.top = (y) + "px";
+        el.style.transform = "translate(-50%,-50%)";
+
+        const badgeText = mismatch ? "Posição errada" : (selectedSlotId===s.id ? "Selecionado" : "");
+        el.innerHTML = `
+          <div class="avatar" title="${p?.full_name ?? ""} (${p?.nationality ?? ""})">
+            <img alt="${p?.display_name ?? ""}" src="${p?.photo_url ?? ""}" draggable="false"/>
+          </div>
+          <div class="badge">${badgeText}</div>
+          <div class="name">${p?.display_name ?? "—"}</div>
+        `;
+
+        pitchEl.appendChild(el);
+        attachDrag(el);
+
+        el.addEventListener("click", ()=>{
+          if(el.dataset.justDragged === "1"){ el.dataset.justDragged = "0"; return; }
+
+          // fluxo B: banco -> campo
+          if(selectedCandidateId){
+            substitute(s.id, selectedCandidateId);
+            selectedCandidateId = null;
+            selectedSlotId = null;
+            renderAll();
+            return;
+          }
+
+          // fluxo A: campo -> banco
+          if(selectedSlotId === s.id){
+            selectedSlotId = null;
+            renderAll();
+            showToast("Substituição desarmada.");
+          }else{
+            selectedSlotId = s.id;
+            renderAll();
+            showToast(`Agora escolha no banco para substituir <b>${p.display_name}</b>.`);
+          }
+        });
+      });
+    }
+
+    function attachDrag(el){
+      let dragging = false;
+      let startX=0, startY=0, startLeft=0, startTop=0;
+      let moved = 0;
+
+      const onDown = (e)=>{
+        if(e.button !== undefined && e.button !== 0) return;
+        dragging = true;
+        moved = 0;
+        el.setPointerCapture(e.pointerId);
+        const rect = el.getBoundingClientRect();
+        const pitchRect = pitchEl.getBoundingClientRect();
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = rect.left - pitchRect.left + rect.width/2;
+        startTop = rect.top - pitchRect.top + rect.height/2;
+      };
+
+      const onMove = (e)=>{
+        if(!dragging) return;
+        const pitchRect = pitchEl.getBoundingClientRect();
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        moved = Math.max(moved, Math.abs(dx) + Math.abs(dy));
+
+        let nx = startLeft + dx;
+        let ny = startTop + dy;
+
+        const pad = 24;
+        nx = Math.max(pad, Math.min(pitchRect.width - pad, nx));
+        ny = Math.max(pad, Math.min(pitchRect.height - pad, ny));
+
+        el.style.left = nx + "px";
+        el.style.top = ny + "px";
+      };
+
+      const onUp = (e)=>{
+        if(!dragging) return;
+        dragging = false;
+        el.releasePointerCapture(e.pointerId);
+
+        if(moved > 8){
+          el.dataset.justDragged = "1";
+          const pitchRect = pitchEl.getBoundingClientRect();
+          const left = parseFloat(el.style.left);
+          const top = parseFloat(el.style.top);
+          const slotId = el.dataset.slotId;
+          const s = slots.find(x=>x.id===slotId);
+          s.xPct = (left / pitchRect.width) * 100;
+          s.yPct = (top / pitchRect.height) * 100;
+        }
+      };
+
+      el.addEventListener("pointerdown", onDown);
+      el.addEventListener("pointermove", onMove);
+      el.addEventListener("pointerup", onUp);
+      el.addEventListener("pointercancel", onUp);
+    }
+
+    function renderPanel(){
+      activeDot.classList.remove("on");
+
+      const slotSelected = !!selectedSlotId;
+      const candidateSelected = !!selectedCandidateId;
+
+      if(slotSelected && !candidateSelected){
+        const pid = lineup[selectedSlotId];
+        const p = getPlayer(pid);
+        const pos = slots.find(s=>s.id===selectedSlotId)?.label ?? "—";
+        activeDot.classList.add("on");
+        activeTitle.textContent = `Campo selecionado: ${p.display_name}`;
+        activeSub.textContent = `Posição ${pos} • agora clique no banco para substituir`;
+      }
+
+      if(candidateSelected && !slotSelected){
+        const p = getPlayer(selectedCandidateId);
+        activeDot.classList.add("on");
+        activeTitle.textContent = `Banco selecionado: ${p.display_name}`;
+        activeSub.textContent = `Agora clique em alguém no campo para substituir`;
+      }
+
+      if(!slotSelected && !candidateSelected){
+        activeTitle.textContent = "Nenhuma substituição armada";
+        activeSub.textContent = "Clique no campo ou no banco para começar";
+      }
+
+      const term = searchInput.value.trim().toLowerCase();
+      panelBodyEl.innerHTML = "";
+
+      const mismatchByPlayer = {};
+      for(const [sid,pid] of Object.entries(lineup)){
+        mismatchByPlayer[pid] = isMismatch(sid);
+      }
+
+      groupsOrder.forEach(g=>{
+        let groupPlayers = players.filter(p=>p.primary_group===g);
+
+        if(term){
+          groupPlayers = groupPlayers.filter(p =>
+            (p.display_name||"").toLowerCase().includes(term) ||
+            (p.full_name||"").toLowerCase().includes(term)
+          );
+        }
+
+        groupPlayers.sort((a,b)=>b.peak_overall - a.peak_overall);
+
+        if(groupPlayers.length === 0) return;
+
+        const groupEl = document.createElement("div");
+        groupEl.className = "group";
+
+        const title = document.createElement("h3");
+        title.innerHTML = `<span>${g}</span><span class="count">${groupPlayers.length}</span>`;
+        groupEl.appendChild(title);
+
+        const list = document.createElement("div");
+
+        groupPlayers.forEach(p=>{
+          const inLine = isInLineup(p.id);
+          const mismatch = !!mismatchByPlayer[p.id];
+
+          const row = document.createElement("button");
+          row.className = "row " +
+            (inLine ? "in-lineup" : "out-lineup") +
+            (selectedCandidateId === p.id ? " candidate" : "") +
+            (mismatch ? " mismatch" : "");
+
+          const warn = mismatch ? "⚠️" : "";
+          const flag = p.flag_emoji || isoToFlagEmoji(p.nationality_code);
+
+          row.title = `${p.full_name} • ${p.nationality} • Peak ${p.peak_overall} • ${(p.top_positions||[]).join(", ")}${mismatch ? " • Em campo fora da posição esperada" : ""}`;
+
+          row.innerHTML = `
+            <div class="row-main">
+              <span class="flag" aria-hidden="true">${flag}</span>
+              <span class="row-name">${p.display_name}</span>
+            </div>
+            <div class="row-meta">
+              ${mismatch ? `<span class="warnTag" aria-hidden="true">${warn}</span>` : ``}
+              <span class="ovr">${p.peak_overall}</span>
+            </div>
+          `;
+
+          row.addEventListener("click", ()=>{
+            // fluxo A: campo -> banco
+            if(selectedSlotId){
+              substitute(selectedSlotId, p.id);
+              selectedSlotId = null;
+              selectedCandidateId = null;
+              renderAll();
+              return;
+            }
+
+            // fluxo B: banco -> campo
+            if(selectedCandidateId === p.id){
+              selectedCandidateId = null;
+              showToast("Seleção do banco removida.");
+            }else{
+              selectedCandidateId = p.id;
+              showToast(`Agora clique no campo para colocar <b>${p.display_name}</b>.`);
+            }
+            renderAll();
+          });
+
+          list.appendChild(row);
+        });
+
+        groupEl.appendChild(list);
+        panelBodyEl.appendChild(groupEl);
+      });
+
+      if(term && panelBodyEl.children.length === 0){
+        const empty = document.createElement("div");
+        empty.style.padding = "14px 6px";
+        empty.style.color = "rgba(167,179,209,.9)";
+        empty.style.fontSize = "13px";
+        empty.textContent = "Nada encontrado com esse termo.";
+        panelBodyEl.appendChild(empty);
+      }
+    }
+
+    function substitute(slotId, newPlayerId){
+      const currentPlayerId = lineup[slotId];
+      if(currentPlayerId === newPlayerId){
+        showToast("Esse jogador já está nessa posição.");
+        return;
+      }
+
+      const otherSlotId = Object.entries(lineup).find(([sid,pid])=>pid===newPlayerId)?.[0] ?? null;
+
+      if(otherSlotId){
+        lineup[otherSlotId] = currentPlayerId;
+        lineup[slotId] = newPlayerId;
+        showToast(`Troca: <b>${getPlayer(newPlayerId).display_name}</b> ↔ <b>${getPlayer(currentPlayerId).display_name}</b>`);
+      }else{
+        lineup[slotId] = newPlayerId;
+        showToast(`Entrou: <b>${getPlayer(newPlayerId).display_name}</b>`);
+      }
+
+      if(isMismatch(slotId)){
+        const pos = slots.find(s=>s.id===slotId)?.label ?? "—";
+        showToast(`⚠️ <b>${getPlayer(newPlayerId).display_name}</b> ficou fora da posição esperada (${pos}).`);
+      }
+    }
+
+    
+    // Importar JSON (sem servidor, via file picker)
+    const importBtn = document.getElementById("importBtn");
+    const fileInput = document.getElementById("fileInput");
+
+    importBtn.addEventListener("click", ()=> fileInput.click());
+
+    fileInput.addEventListener("change", async (e)=>{
+      const file = e.target.files?.[0];
+      if(!file) return;
+
+      try{
+        const text = await file.text();
+        const obj = JSON.parse(text);
+
+        const list = (obj.players || obj) || [];
+        const normalized = list.map(p => ({
+          id: p.id,
+          full_name: p.full_name,
+          display_name: p.display_name,
+          photo_url: p.photo_url,
+          nationality: p.nationality,
+          nationality_code: p.nationality_iso2 || p.nationality_code || null,
+          flag_emoji: p.flag_emoji || null,
+          primary_group: p.primary_group,
+          top_positions: p.top_positions || [],
+          peak_overall: Number(p.peak_overall || 0),
+          sources: p.sources || []
+        })).map(p => ({...p, photo_url: p.photo_url || avatarDataURI(p.display_name || p.full_name || "JD")}));
+
+        if(!normalized.length){
+          showToast("JSON inválido: não encontrei players[].");
+          return;
+        }
+
+        players = normalized;
+        // Recria lineup pra bater com a nova lista
+        applyFormation(currentFormationKey, {resetLineup:true});
+        showToast(`Importado: <b>${normalized.length}</b> jogadores.`);
+      }catch(err){
+        console.error(err);
+        showToast("Falha ao importar JSON (formato inválido).");
+      }finally{
+        fileInput.value = "";
+      }
+    });
+
+document.getElementById("resetBtn").addEventListener("click", ()=>{
+      applyFormation(currentFormationKey, {resetLineup:true});
+      showToast("Reset aplicado.");
+    });
+
+    formationSelect.addEventListener("change", (e)=>{
+      applyFormation(e.target.value, {resetLineup:true});
+    });
+
+    searchInput.addEventListener("input", ()=>{
+      renderPanel();
+    });
+
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){
+        if(selectedSlotId || selectedCandidateId){
+          selectedSlotId = null;
+          selectedCandidateId = null;
+          showToast("Seleções limpas.");
+          renderAll();
+        }
+      }
+    });
+
+    window.addEventListener("resize", ()=>{
+      renderPitch();
+    });
+
+    function renderAll(){
+      formationPill.textContent = `${players.length} jogadores carregados • Formação ${formationLabels[currentFormationKey]} • validação por posição ligada`;
+      renderPitch();
+      renderPanel();
+    }
+
+    formationSelect.value = currentFormationKey;
+    renderAll();
+  </script>
+</body>
+</html>
