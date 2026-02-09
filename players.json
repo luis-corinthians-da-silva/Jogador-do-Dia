@@ -26,7 +26,7 @@
       "id": "p_cristian_tello",
       "full_name": "Cristian Tello Herrera",
       "display_name": "Tello",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Tello",
+      "photo_url": "https://cdn.soccerwiki.org/images/player/44979.png",
       "nationality": "Espanha",
       "nationality_iso2": "ES",
       "flag_emoji": "🇪🇸",
@@ -38,13 +38,14 @@
       "peak_overall": 80,
       "sources": [
         "https://www.fifaindex.com/player/200315/cristian-tello/fifa19/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_mohamed_aboutrika",
       "full_name": "Mohammed Aboutrika",
       "display_name": "Aboutrika",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Aboutrika",
+      "photo_url": "https://www.ogol.com.br/img/jogadores/new/32/14/23214_mohamed_aboutrika_20250615042758.jpg",
       "nationality": "Egito",
       "nationality_iso2": "EG",
       "flag_emoji": "🇪🇬",
@@ -57,13 +58,14 @@
       "peak_overall": 77,
       "sources": [
         "https://www.fifaindex.com/player/169764/mohammed-aboutrika/fifa12/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_breno",
       "full_name": "Breno Vinícius Borges",
       "display_name": "Breno",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Breno",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/52947-1436279954.jpg?lm=1",
       "nationality": "Brasil",
       "nationality_iso2": "BR",
       "flag_emoji": "🇧🇷",
@@ -74,13 +76,14 @@
       "peak_overall": 75,
       "sources": [
         "https://www.fifaindex.com/player/180955/breno/fifa16/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_lassana_diarra",
       "full_name": "Lassana Diarra",
       "display_name": "L. Diarra",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=LassanaDiarra",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/23914-1464259400.jpg?lm=1",
       "nationality": "França",
       "nationality_iso2": "FR",
       "flag_emoji": "🇫🇷",
@@ -92,13 +95,14 @@
       "peak_overall": 82,
       "sources": [
         "https://www.fifaindex.com/player/163711/lassana-diarra/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_tcheco",
       "full_name": "Tcheco",
       "display_name": "Tcheco",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Tcheco",
+      "photo_url": "https://espacovital.s3.amazonaws.com/noticia-photos/202008140724420.jpg",
       "nationality": "Brasil",
       "nationality_iso2": "BR",
       "flag_emoji": "🇧🇷",
@@ -111,13 +115,14 @@
       "sources": [
         "https://sofifa.com/player/158160/tcheco/100002?hl=en-US"
       ],
-      "notes": "Entrada via SoFIFA (FIFA 10)."
+      "notes": "Entrada via SoFIFA (FIFA 10).",
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_yoann_gourcuff",
       "full_name": "Yoann Miguel Gourcuff",
       "display_name": "Gourcuff",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Gourcuff",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/18912-1448382467.jpg?lm=1",
       "nationality": "França",
       "nationality_iso2": "FR",
       "flag_emoji": "🇫🇷",
@@ -129,16 +134,17 @@
       "peak_overall": 85,
       "sources": [
         "https://www.fifaindex.com/player/153296/yoann-gourcuff/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_trevor_sinclair",
       "full_name": "Trevor John Sinclair",
       "display_name": "Sinclair",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=TrevorSinclair",
+      "photo_url": "https://www.ogol.com.br/img/jogadores/59/239959_med_trevor_sinclair.jpg",
       "nationality": "Inglaterra",
       "nationality_iso2": "GB",
-      "flag_emoji": "🏴",
+      "flag_emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
       "primary_group": "Atacante",
       "top_positions": [
         "PE",
@@ -147,13 +153,14 @@
       "peak_overall": 76,
       "sources": [
         "https://www.fifaindex.com/player/50421/trevor-sinclair/fifa05/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_eduardo_da_silva",
       "full_name": "Eduardo Alves da Silva",
       "display_name": "Eduardo",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=EduardoDaSilva",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/24633-1554732622.jpg?lm=1",
       "nationality": "Croácia",
       "nationality_iso2": "HR",
       "flag_emoji": "🇭🇷",
@@ -166,13 +173,14 @@
       "sources": [
         "https://sofifa.com/player/177491/eduardo/090002?hl=en-US",
         "https://www.fifaindex.com/player/177491/eduardo-da-silva/changelog/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_chygrynskyi",
       "full_name": "Dmytro Chygrynskyi",
       "display_name": "Chygrynskyi",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Chygrynskyi",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/header/25732-1692783682.png?lm=1",
       "nationality": "Ucrânia",
       "nationality_iso2": "UA",
       "flag_emoji": "🇺🇦",
@@ -183,16 +191,17 @@
       "peak_overall": 78,
       "sources": [
         "https://www.fifaindex.com/player/176483/dmytro-chygrynskyy/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_adebayo_akinfenwa",
       "full_name": "Adebayo Akinfenwa",
       "display_name": "Akinfenwa",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Akinfenwa",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/32798-1493107994.jpg?lm=1",
       "nationality": "Inglaterra",
       "nationality_iso2": "GB",
-      "flag_emoji": "🏴",
+      "flag_emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
       "primary_group": "Atacante",
       "top_positions": [
         "CA"
@@ -200,13 +209,14 @@
       "peak_overall": 65,
       "sources": [
         "https://www.fifaindex.com/player/156321/adebayo-akinfenwa/fifa21/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_denis_cheryshev",
       "full_name": "Denis Dmitriyevich Cheryshev",
       "display_name": "Cheryshev",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Cheryshev",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Denis_Cheryshev_2019.jpg",
       "nationality": "Rússia",
       "nationality_iso2": "RU",
       "flag_emoji": "🇷🇺",
@@ -218,13 +228,14 @@
       "peak_overall": 79,
       "sources": [
         "https://www.fifaindex.com/player/206225/denis-cheryshev/fifa19/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_renan_gk",
       "full_name": "Renan dos Santos",
       "display_name": "Renan",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=RenanGK",
+      "photo_url": "https://i0.statig.com.br/esporte/futebol/8731_1326811820170.jpg",
       "nationality": "Brasil",
       "nationality_iso2": "BR",
       "flag_emoji": "🇧🇷",
@@ -236,13 +247,14 @@
       "sources": [
         "https://sofifa.com/player/203784/renan/140002?hl=en-US"
       ],
-      "notes": "Entrada via SoFIFA (FIFA 14)."
+      "notes": "Entrada via SoFIFA (FIFA 14).",
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_hakan_sukur",
       "full_name": "Hakan Şükür",
       "display_name": "Şükür",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=HakanSukur",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/3363-1461241499.jpg?lm=1",
       "nationality": "Turquia",
       "nationality_iso2": "TR",
       "flag_emoji": "🇹🇷",
@@ -253,13 +265,14 @@
       "peak_overall": 81,
       "sources": [
         "https://www.fifaindex.com/player/24691/hakan-sukur/fifa05/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_seydou_keita",
       "full_name": "Seydou Kéita",
       "display_name": "S. Keita",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=SeydouKeita",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/5486-1448466474.jpg?lm=1",
       "nationality": "Mali",
       "nationality_iso2": "ML",
       "flag_emoji": "🇲🇱",
@@ -271,13 +284,14 @@
       "peak_overall": 82,
       "sources": [
         "https://www.fifaindex.com/player/12259/seydou-keita/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_ryan_babel",
       "full_name": "Ryan Guno Babel",
       "display_name": "Babel",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=RyanBabel",
+      "photo_url": "https://assets.goal.com/images/v3/blt1684ccfaef0b16aa/afdf85db188fed0605b7986e9e52da3b2f6890d7.jpg?auto=webp&format=pjpg&width=3840&quality=60",
       "nationality": "Holanda",
       "nationality_iso2": "NL",
       "flag_emoji": "🇳🇱",
@@ -290,13 +304,14 @@
       "peak_overall": 81,
       "sources": [
         "https://www.fifaindex.com/player/157301/ryan-babel/fifa09/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_miguel_valencia",
       "full_name": "Miguel Brito",
       "display_name": "Miguel",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=MiguelValencia",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/13225-1720493950.jpg?lm=1",
       "nationality": "Portugal",
       "nationality_iso2": "PT",
       "flag_emoji": "🇵🇹",
@@ -308,13 +323,14 @@
       "sources": [
         "https://www.fifaindex.com/player/4006/miguel/fifa07/"
       ],
-      "notes": "Miguel (lateral português), ex-Valencia."
+      "notes": "Miguel (lateral português), ex-Valencia.",
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_shinji_okazaki",
       "full_name": "Shinji Okazaki",
       "display_name": "Okazaki",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Okazaki",
+      "photo_url": "https://www.ogol.com.br/img/jogadores/new/70/68/67068_shinji_okazaki_20241101123802.jpg",
       "nationality": "Japão",
       "nationality_iso2": "JP",
       "flag_emoji": "🇯🇵",
@@ -326,13 +342,14 @@
       "peak_overall": 76,
       "sources": [
         "https://www.fifaindex.com/player/166961/shinji-okazaki/fifa14/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_andre_santos",
       "full_name": "André Santos",
       "display_name": "André Santos",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=AndreSantos",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/54275-1729149998.jpg?lm=1",
       "nationality": "Brasil",
       "nationality_iso2": "BR",
       "flag_emoji": "🇧🇷",
@@ -344,13 +361,14 @@
       "peak_overall": 80,
       "sources": [
         "https://www.fifaindex.com/player/166774/andre-santos/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_boa_morte",
       "full_name": "Luís Boa Morte",
       "display_name": "Boa Morte",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=BoaMorte",
+      "photo_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELyDubVLvb3psVEAzWJYYvYih8K6V7f2X3A&s",
       "nationality": "Portugal",
       "nationality_iso2": "PT",
       "flag_emoji": "🇵🇹",
@@ -362,13 +380,14 @@
       "peak_overall": 80,
       "sources": [
         "https://www.fifaindex.com/team/1354/portugal/fifa06/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_victor_moses",
       "full_name": "Victor Moses",
       "display_name": "Moses",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=VictorMoses",
+      "photo_url": "https://www.ogol.com.br/img/planteis/new/30/34/2263034_victor_moses_20250424011956.jpg",
       "nationality": "Nigéria",
       "nationality_iso2": "NG",
       "flag_emoji": "🇳🇬",
@@ -380,13 +399,14 @@
       "peak_overall": 80,
       "sources": [
         "https://www.fifaindex.com/player/172962/victor-moses/fifa18/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_emmanuel_adebayor",
       "full_name": "Emmanuel Adebayor",
       "display_name": "Adebayor",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Adebayor",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/8883-1565870134.jpg?lm=1",
       "nationality": "Togo",
       "nationality_iso2": "TG",
       "flag_emoji": "🇹🇬",
@@ -398,13 +418,14 @@
       "sources": [
         "https://www.fifaindex.com/player/53050/emmanuel-adebayor/fifa10/"
       ],
-      "notes": "Observação: FUT mostra 86 no FIFA 10, mas aqui usamos rating de Career Mode (FIFAIndex)."
+      "notes": "Observação: FUT mostra 86 no FIFA 10, mas aqui usamos rating de Career Mode (FIFAIndex).",
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_laurent_koscielny",
       "full_name": "Laurent Koscielny",
       "display_name": "Koscielny",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Koscielny",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/76277-1518796128.jpg?lm=1",
       "nationality": "França",
       "nationality_iso2": "FR",
       "flag_emoji": "🇫🇷",
@@ -415,13 +436,14 @@
       "peak_overall": 85,
       "sources": [
         "https://www.fifaindex.com/player/165229/laurent-koscielny/fifa17/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_aleksandar_kolarov",
       "full_name": "Aleksandar Kolarov",
       "display_name": "Kolarov",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Kolarov",
+      "photo_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfYqJlyf_AnTj5DQ_A2UAdeUcKIHS2UCdTvQ&s",
       "nationality": "Sérvia",
       "nationality_iso2": "RS",
       "flag_emoji": "🇷🇸",
@@ -434,13 +456,14 @@
       "peak_overall": 80,
       "sources": [
         "https://www.fifaindex.com/player/185103/aleksandar-kolarov/fifa17/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_gudjohnsen",
       "full_name": "Eiður Smári Guðjohnsen",
       "display_name": "Gudjohnsen",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Gudjohnsen",
+      "photo_url": "https://img.a.transfermarkt.technology/portrait/big/3176-1462872872.jpg?lm=1",
       "nationality": "Islândia",
       "nationality_iso2": "IS",
       "flag_emoji": "🇮🇸",
@@ -453,13 +476,14 @@
       "peak_overall": 87,
       "sources": [
         "https://www.fifaindex.com/player/2310/ei%C3%B0ur-gudjohnsen/fifa05/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_fabricio_coloccini",
       "full_name": "Fabricio Coloccini",
       "display_name": "Coloccini",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Coloccini",
+      "photo_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcjzvAsGMoFFroFNZhRGmYncxVqHcHGyXRdw&s",
       "nationality": "Argentina",
       "nationality_iso2": "AR",
       "flag_emoji": "🇦🇷",
@@ -470,13 +494,14 @@
       "peak_overall": 81,
       "sources": [
         "https://www.fifaindex.com/player/142515/fabricio-coloccini/fifa13/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_manuel_lanzini",
       "full_name": "Manuel Lanzini",
       "display_name": "Lanzini",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Lanzini",
+      "photo_url": "https://www.ogol.com.br/img/jogadores/new/72/43/1277243_manuel_lanzini_20250421164635.png",
       "nationality": "Argentina",
       "nationality_iso2": "AR",
       "flag_emoji": "🇦🇷",
@@ -489,13 +514,14 @@
       "peak_overall": 81,
       "sources": [
         "https://www.fifaindex.com/player/188988/manuel-lanzini/fifa18/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_mauro_camoranesi",
       "full_name": "Mauro Germán Camoranesi",
       "display_name": "Camoranesi",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Camoranesi",
+      "photo_url": "https://www.ogol.com.br/img/jogadores/new/19/94/1994_mauro_camoranesi_20250307124520.jpg",
       "nationality": "Itália",
       "nationality_iso2": "IT",
       "flag_emoji": "🇮🇹",
@@ -508,13 +534,14 @@
       "peak_overall": 84,
       "sources": [
         "https://www.fifaindex.com/player/1382/mauro-camoranesi/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_nicklas_bendtner",
       "full_name": "Nicklas Bendtner",
       "display_name": "Bendtner",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Bendtner",
+      "photo_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSheyuSh3QmuI3vx98n1flvmXgkFtm6EHt0NQ&s",
       "nationality": "Dinamarca",
       "nationality_iso2": "DK",
       "flag_emoji": "🇩🇰",
@@ -525,13 +552,14 @@
       "peak_overall": 79,
       "sources": [
         "https://www.fifaindex.com/player/173809/nicklas-bendtner/fifa11/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_jakub_blaszczykowski",
       "full_name": "Jakub Błaszczykowski",
       "display_name": "Błaszczykowski",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Blaszczykowski",
+      "photo_url": "https://i.pinimg.com/564x/f1/e0/25/f1e02520733b43ae6103c229c215f3c0.jpg",
       "nationality": "Polônia",
       "nationality_iso2": "PL",
       "flag_emoji": "🇵🇱",
@@ -543,13 +571,14 @@
       "peak_overall": 83,
       "sources": [
         "https://www.fifaindex.com/player/173731/jakub-blaszczykowski/fifa14/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_kakha_kaladze",
       "full_name": "Kakha Kaladze",
       "display_name": "Kaladze",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=Kaladze",
+      "photo_url": "https://s.hs-data.com/gfx/person/l/826.jpg?fallback=male",
       "nationality": "Geórgia",
       "nationality_iso2": "GE",
       "flag_emoji": "🇬🇪",
@@ -561,13 +590,14 @@
       "peak_overall": 85,
       "sources": [
         "https://www.fifaindex.com/player/2983/kakha-kaladze/fifa07/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     },
     {
       "id": "p_tim_cahill",
       "full_name": "Timothy Filiga Cahill",
       "display_name": "Cahill",
-      "photo_url": "https://api.dicebear.com/9.x/thumbs/svg?seed=TimCahill",
+      "photo_url": "https://b.fssta.com/uploads/application/soccer/headshots/2638.png",
       "nationality": "Austrália",
       "nationality_iso2": "AU",
       "flag_emoji": "🇦🇺",
@@ -580,7 +610,8 @@
       "peak_overall": 81,
       "sources": [
         "https://www.fifaindex.com/player/51412/tim-cahill/fifa10/"
-      ]
+      ],
+      "photo_source": "user_provided_url"
     }
   ]
 }
