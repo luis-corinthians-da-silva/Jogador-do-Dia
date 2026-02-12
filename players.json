@@ -144,7 +144,7 @@
       "photo_url": "https://www.ogol.com.br/img/jogadores/59/239959_med_trevor_sinclair.jpg",
       "nationality": "Inglaterra",
       "nationality_iso2": "GB",
-      "flag_emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "flag_emoji": "🏴",
       "primary_group": "Atacante",
       "top_positions": [
         "PE",
@@ -164,7 +164,7 @@
       "nationality": "Croácia",
       "nationality_iso2": "HR",
       "flag_emoji": "🇭🇷",
-      "primary_group": "Atacante",
+      "primary_group": "Meia",
       "top_positions": [
         "CA",
         "SA"
@@ -201,7 +201,7 @@
       "photo_url": "https://img.a.transfermarkt.technology/portrait/big/32798-1493107994.jpg?lm=1",
       "nationality": "Inglaterra",
       "nationality_iso2": "GB",
-      "flag_emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "flag_emoji": "🏴",
       "primary_group": "Atacante",
       "top_positions": [
         "CA"
@@ -372,7 +372,7 @@
       "nationality": "Portugal",
       "nationality_iso2": "PT",
       "flag_emoji": "🇵🇹",
-      "primary_group": "Atacante",
+      "primary_group": "Meia",
       "top_positions": [
         "PE",
         "PD"
@@ -563,7 +563,7 @@
       "nationality": "Polônia",
       "nationality_iso2": "PL",
       "flag_emoji": "🇵🇱",
-      "primary_group": "Atacante",
+      "primary_group": "Meia",
       "top_positions": [
         "PD",
         "PE"
